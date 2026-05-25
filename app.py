@@ -1,6 +1,6 @@
 import streamlit as st
 from core.pipeline import summarize_pipeline
-import markdown as md
+import textwrap
 
 st.set_page_config(page_title="Revizen", layout="centered")
 
@@ -234,9 +234,47 @@ blockquote {
     margin-bottom: 18px;
 }
 
+/* Entire expander */
+[data-testid="stExpander"] {
+    background: rgba(17, 25, 40, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    backdrop-filter: blur(18px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22) !important;
+    margin-bottom: 18px !important;
+}
+
+/* Header */
+[data-testid="stExpander"] details summary {
+    background: rgba(255,255,255,0.03) !important;
+    border-radius: 18px 18px 0 0 !important;
+    padding: 0.9rem 1rem !important;
+    color: #f5f7ff !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Header hover */
+[data-testid="stExpander"] details summary:hover {
+    background: rgba(255,255,255,0.05) !important;
+}
+
+/* Inner content */
+[data-testid="stExpander"] details div {
+    background: transparent !important;
+    color: #dfe7ff !important;
+}
+
+/* Remove default ugly borders */
+[data-testid="stExpander"] details {
+    border: none !important;
+}
 </style>
 
 """, unsafe_allow_html=True)
+
 st.markdown("""
 
 <div class="main-title">
@@ -297,6 +335,25 @@ if uploaded_file is not None:
                         st.markdown(keyword_content)
 
                 st.success("Notes generated successfully!")
+                
+                # Combine everything into downloadable text (dedented)
+                download_text = textwrap.dedent(f"""
+                          
+                🔥 HIGH PRIORITY REVISION
+                {revision_content}
 
+                ❓ IMPORTANT QNA
+                {qna_content}
+
+                📘 IMPORTANT KEYWORDS
+                {keyword_content}
+                """)
+
+                st.download_button(
+                    label="📥 Download Notes",
+                    data=download_text,
+                    file_name="revizen_notes.txt",
+                    mime="text/plain",
+                )
 
 

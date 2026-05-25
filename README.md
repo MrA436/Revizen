@@ -1,44 +1,122 @@
-# AI Notes Summarizer
+# Revizen
 
-An AI-powered PDF notes summarizer built using Python, Streamlit, Groq API, OCR, and PDF text extraction.
+> AI-powered exam survival intelligence for fast, high-yield revision.
 
-This tool can:
+Revizen is a PDF-based AI revision tool built using Python, Streamlit, OCR, and Groq API.
 
-* Extract text from normal PDFs
-* Automatically use OCR for scanned/image-based PDFs
-* Generate:
+It extracts educational content from PDFs, processes it through an AI intelligence pipeline, and returns structured revision-focused outputs designed for stressed students and last-minute exam preparation.
 
-  * Clean summaries
-  * Important exam questions
-  * Revision notes
-  * Important keywords
-* Display generated notes directly inside the app
-* Allow users to download generated notes as a `.txt` file
+Instead of generating large walls of notes, Revizen focuses on:
+
+* rapid recall
+* high-priority concepts
+* exam-focused revision
+* reduced cognitive overload
 
 ---
 
 # Features
 
-* Hybrid PDF processing
+## Hybrid PDF Processing
 
-  * Normal text extraction using `pypdf`
-  * OCR fallback using `EasyOCR`
-* AI-powered summarization using Groq API
-* Streamlit frontend
-* Downloadable generated notes
-* Spinner/loading feedback
-* Scrollable notes viewer
+Revizen supports both:
+
+* standard text-based PDFs
+* scanned/image-based PDFs
+
+The extraction pipeline combines:
+
+* `pypdf` for direct text extraction
+* `EasyOCR` fallback for scanned pages
+
+---
+
+## AI-Powered Revision Intelligence
+
+Revizen generates structured educational outputs including:
+
+* High-priority revision notes
+* Important exam questions
+* Technical keywords
+* Concise recall-oriented explanations
+
+---
+
+## Structured JSON Pipeline
+
+The AI output is converted into structured JSON instead of raw markdown.
+
+Example output structure:
+
+```json id="gk3b0n"
+{
+  "high_priority_revision": [],
+  "exam_questions": [],
+  "keywords": []
+}
+```
+
+This keeps the rendering cleaner and allows the intelligence layer to remain reusable across different interfaces.
+
+---
+
+## Cinematic Glassmorphism UI
+
+The Streamlit frontend includes:
+
+* dark cinematic styling
+* glassmorphism panels
+* progressive disclosure using expanders
+* calmer revision flow
+* structured visual hierarchy
+
+---
+
+## Downloadable Notes
+
+Generated revision notes can be downloaded directly from the app.
 
 ---
 
 # Tech Stack
 
+## Backend & AI
+
 * Python
-* Streamlit
 * Groq API
+* Structured JSON pipelines
+
+## PDF & OCR
+
+* pypdf
 * EasyOCR
 * pdf2image
-* pypdf
+* OpenCV
+
+## Frontend
+
+* Streamlit
+* Custom CSS
+
+---
+
+# How Revizen Works
+
+```text id="wnv4c8"
+PDF Upload
+↓
+Text Extraction
+↓
+OCR Fallback (if needed)
+↓
+AI Prompt Processing
+↓
+Structured JSON Generation
+↓
+JSON Cleanup & Parsing
+↓
+Frontend Rendering
+```
 
 ---
 
@@ -46,14 +124,14 @@ This tool can:
 
 Clone the repository:
 
-```bash
-git clone <your-repo-link>
-cd <repo-name>
+```bash id="j6a4ec"
+git clone https://github.com/MrA436/Revizen.git
+cd Revizen
 ```
 
 Install dependencies:
 
-```bash
+```bash id="2cuhje"
 pip install -r requirements.txt
 ```
 
@@ -63,71 +141,81 @@ pip install -r requirements.txt
 
 Create a `.env` file in the root directory:
 
-```env
+```env id="5c9hlh"
 GROQ_API_KEY=your_api_key_here
 ```
 
-Get your free API key from Groq Cloud.
+Get your API key from Groq Cloud.
 
 ---
 
-# Run the App
+# Run The Streamlit App
 
-```bash
+```bash id="o5sk91"
 streamlit run app.py
 ```
 
 ---
 
-# Recommended PDF Limits
+# API Usage
 
-For best performance:
+Revizen also exposes its intelligence layer through FastAPI.
 
-* Use PDFs under ~100 pages
-* Use clear scans/images
-* English text recommended
+Run the API:
 
----
+```bash id="3n58sv"
+uvicorn api.main:app --reload
+```
 
-# Project Structure
+Example endpoint:
 
-```text
-.
-├── app.py
-├── main.py
-├── requirements.txt
-├── README.md
-└── .env
+```text id="w7h8an"
+POST /revision
+```
+
+Input:
+
+```json id="n3ec2j"
+{
+  "text": "your extracted educational text here"
+}
+```
+
+Output:
+
+```json id="5fbc4g"
+{
+  "high_priority_revision": [],
+  "exam_questions": [],
+  "keywords": []
+}
 ```
 
 ---
 
-# How It Works
+# Recommended PDF Guidelines
 
-1. User uploads a PDF
-2. Text is extracted using `pypdf`
-3. If extraction fails on a page:
+For best performance:
 
-   * OCR fallback is triggered using EasyOCR
-4. Extracted text is sent to Groq API
-5. AI generates:
-
-   * Summary
-   * Exam questions
-   * Revision notes
-   * Keywords
-6. Results are displayed and downloadable
+* Use PDFs under ~100 pages
+* Clear scans/images work best
+* English text recommended
+* Avoid heavily corrupted scans
 
 ---
 
-# Future Improvements
+# Core Purpose
 
-* Better prompt engineering
-* Multi-language OCR support
-* Chunked processing for huge PDFs
-* Better UI/UX
-* DOCX/PDF export support
-* Authentication & cloud deployment
+Revizen is designed to:
+
+* reduce revision overwhelm
+* improve scanability
+* prioritize high-yield concepts
+* help students revise faster under pressure
+
+The focus is not generating more notes.
+
+The focus is generating more useful revision.
 
 ---
 

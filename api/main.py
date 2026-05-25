@@ -1,27 +1,16 @@
-from fastapi import FastAPI, UploadFile, File
-import shutil
-
-from core.pipeline import summarize_pipeline
-
+from fastapi import FastAPI
+from pydantic import BaseModel
+from core.pipeline import revision_pipeline
 
 app = FastAPI()
 
+class RevisionRequest(BaseModel):    
+    text: str
 
-@app.post("/summarize")
-async def summarize_pdf(file: UploadFile = File(...)):
-
-    temp_path = "temp.pdf"
-
-    # save uploaded file
-    with open(temp_path, "wb") as buffer:
-
-        shutil.copyfileobj(file.file, buffer)
-
-    # run Revizen pipeline
-    notes = summarize_pipeline(temp_path)
-
-    return {
-        "filename": file.filename,
-        "notes": notes
-    }
-
+@app.post("/revision")
+def revision(request: RevisionRequest):
+    text = request.text.strip()
+    if len(text) < 5 or not any(char.isalpha() for char in text):
+        return {"error": "Meaningful educational text required."} 
+    result = revision_pipeline(text)
+    return result
