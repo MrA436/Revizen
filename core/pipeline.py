@@ -1,9 +1,8 @@
-from core.extractor import extract_text_from_pdf
 from core.ai import generate_notes
 import json, re
 
 def summarize_pipeline(pdf_path):
-
+    from core.extractor import extract_text_from_pdf
     #extracting text from pdf
     text = extract_text_from_pdf(pdf_path)   
     result = revision_pipeline(text)
