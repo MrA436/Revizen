@@ -159,31 +159,61 @@ streamlit run app.py
 
 # API Usage
 
-Revizen also exposes its intelligence layer through FastAPI.
+Revizen exposes its revision intelligence layer through FastAPI.
 
-Run the API:
+## Base URL
 
-```bash id="3n58sv"
-uvicorn api.main:app --reload
+```text
+https://revizen-vdue.onrender.com
 ```
 
-Example endpoint:
+---
 
-```text id="w7h8an"
+## Endpoint
+
+```http
 POST /revision
 ```
 
-Input:
+Full endpoint URL:
 
-```json id="n3ec2j"
+```text
+https://revizen-vdue.onrender.com/revision
+```
+
+---
+
+## Request Body
+
+```json
 {
   "text": "your extracted educational text here"
 }
 ```
 
-Output:
+---
 
-```json id="5fbc4g"
+## Example Python Request
+
+```python
+import requests
+
+url = "https://revizen-vdue.onrender.com/revision"
+
+payload = {
+    "text": "Machine learning is a subset of AI that enables systems to learn from data."
+}
+
+response = requests.post(url, json=payload)
+
+print(response.json())
+```
+
+---
+
+## Example Response
+
+```json
 {
   "high_priority_revision": [],
   "exam_questions": [],
